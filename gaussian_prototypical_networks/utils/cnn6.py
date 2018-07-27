@@ -2,8 +2,8 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 
-from utils.dataprep import partitionByClass, prepareBatch
-from utils.visualize import plot_encoded_data, visualize
+from gaussian_prototypical_networks.utils.dataprep import partitionByClass, prepareBatch
+from gaussian_prototypical_networks.utils.visualize import plot_encoded_data, visualize
 import math
 
 def encoder_cnn_noaffine(X, keep_prob, is_training, embed_dim = 64, sigma_mode = "radius" ,H = 28, W = 28):
@@ -330,13 +330,15 @@ def runModel(session, y_predicted, loss, class_ids_ph, X_data, y_data, X_support
     else:
         variables = [loss,correct_predictions,accuracy,y_predicted,X_query_encoded, sigma_query]
 
+    #print("X_data.shape:", X_data.shape[0])
+    batch_size = 32
+    #print("batch size", batch_size)
+    #print("its", int(math.ceil(X_data.shape[0]/batch_size)))
     cnt = 0
     for e in range(epochs): #if starting from a restore file, set range(start_epoch,epochs)
 
         epoch_loss = 0.0
         epoch_acc = 0.0
-
-        batch_size = (N_support + N_query)*N_classes
 
         for i in range(int(math.ceil(X_data.shape[0]/batch_size))): #going over the whole dataset
         #for i in range(1): #just for testing on already trained models

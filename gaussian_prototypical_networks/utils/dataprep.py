@@ -13,10 +13,10 @@ def partitionByClass(X,y_true):
 def prepareBatch(X,y_true,ids_by_class_train,N_classes = 10, N_support = 10, N_query = 5, permute = True):
     maxc = np.max(y_true) #max class number
 
-    classes = np.random.choice(range(maxc+1), size = (N_classes), replace = False) #choose subset of N_classes classes
+    classes = np.random.choice(range(maxc+1), size = (N_classes), replace = True) #choose subset of N_classes classes
 
     ids_batch = np.array(
-        [np.random.choice(ids_by_class_train[c],size = (N_support + N_query), replace = False) for c in classes]
+        [np.random.choice(ids_by_class_train[c],size = (N_support + N_query), replace = True) for c in classes]
         )
 
     ids_batch_support = np.ndarray.flatten(ids_batch[:,:N_support])

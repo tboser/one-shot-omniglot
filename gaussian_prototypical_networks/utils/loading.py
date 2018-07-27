@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from visualize import visualize
+from gaussian_prototypical_networks.utils.visualize import visualize
 
 def loadList(path, list_name, limit = None, verbose = False):
 
